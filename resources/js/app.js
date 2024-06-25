@@ -3,6 +3,10 @@ import "./bootstrap";
 import "bootstrap";
 
 import "@popperjs/core";
+
+import Calendar from "js-year-calendar";
+import "js-year-calendar/dist/js-year-calendar.css";
+
 document.addEventListener("DOMContentLoaded", function (event) {
     const showNavbar = (toggleId, navId, bodyId, headerId) => {
         const toggle = document.getElementById(toggleId),
@@ -41,6 +45,3 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
     linkColor.forEach((l) => l.addEventListener("click", colorLink));
 });
-
-import Calendar from 'js-year-calendar';
-import 'js-year-calendar/dist/js-year-calendar.css';

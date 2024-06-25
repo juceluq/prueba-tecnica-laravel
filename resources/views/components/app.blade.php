@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="{{app()->getLocale()}}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,12 +20,13 @@
 <body id="body-pd">
     <header class="header" id="header">
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+
     </header>
     <hr class="hr">
     <div class="l-navbar hide-elements" id="nav-bar">
         <nav class="nav">
             <div>
-                <a href="#" class="nav_logo">
+                <a href="{{ route('inicio') }}" class="nav_logo">
                     <i class='bx bx-layer nav_logo-icon'></i>
                     <span class="nav_logo-name">PRUEBA TÉCNICA</span>
                 </a>
@@ -39,18 +39,23 @@
                 </li>
 
                 <div class="nav_list">
-                    <a href="#" class="nav_link active">
-                        <i class='bx bx-home nav_icon'></i>
-                        <span class="nav_name">Inicio</span>
-                    </a>
-                    <a href="#" class="nav_link">
-                        <i class='bx bx-calendar nav_icon'></i>
-                        <span class="nav_name">Días Festivos</span>
-                    </a>
-                    <a href="#" class="nav_link">
-                        <i class='bx bx-group nav_icon'></i>
-                        <span class="nav_name">Usuarios</span>
-                    </a>
+                    @php
+                    $currentRoute = request()->path();
+                @endphp
+                
+                <a href="{{ route('inicio') }}" class="nav_link {{ $currentRoute == '/' || $currentRoute != 'usuarios' ? 'active' : '' }}">
+                    <i class='bx bx-home nav_icon'></i>
+                    <span class="nav_name">Inicio</span>
+                </a>
+                <a href="{{ route('usuarios') }}" class="nav_link {{ $currentRoute == 'dias_festivos' ? 'active' : '' }}">
+                    <i class='bx bx-calendar nav_icon'></i>
+                    <span class="nav_name">Días Festivos</span>
+                </a>
+                <a href="{{ route('usuarios') }}" class="nav_link {{ $currentRoute == 'usuarios' ? 'active' : '' }}">
+                    <i class='bx bx-group nav_icon'></i>
+                    <span class="nav_name">Usuarios</span>
+                </a>
+                
                 </div>
             </div>
         </nav>
@@ -65,7 +70,7 @@
             <p>&copy; 2024 <strong>Soluciones Informáticas MJ, S.C.A</strong></p>
         </div>
     </footer>
-    
+
 </body>
 
 </html>
