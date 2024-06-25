@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{app()->getLocale()}}">
+<html lang="{{ app()->getLocale() }}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,9 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-datepicker@1.8.0/dist/css/bootstrap-datepicker.standalone.min.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.css">
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css'])
 
@@ -20,7 +20,6 @@
 <body id="body-pd">
     <header class="header" id="header">
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
-
     </header>
     <hr class="hr">
     <div class="l-navbar hide-elements" id="nav-bar">
@@ -40,27 +39,28 @@
 
                 <div class="nav_list">
                     @php
-                    $currentRoute = request()->path();
-                @endphp
-                
-                <a href="{{ route('inicio') }}" class="nav_link {{ $currentRoute == '/' || $currentRoute != 'usuarios' ? 'active' : '' }}">
-                    <i class='bx bx-home nav_icon'></i>
-                    <span class="nav_name">Inicio</span>
-                </a>
-                <a href="{{ route('usuarios') }}" class="nav_link {{ $currentRoute == 'dias_festivos' ? 'active' : '' }}">
-                    <i class='bx bx-calendar nav_icon'></i>
-                    <span class="nav_name">Días Festivos</span>
-                </a>
-                <a href="{{ route('usuarios') }}" class="nav_link {{ $currentRoute == 'usuarios' ? 'active' : '' }}">
-                    <i class='bx bx-group nav_icon'></i>
-                    <span class="nav_name">Usuarios</span>
-                </a>
-                
+                        $currentRoute = request()->path();
+                    @endphp
+
+                    <a href="{{ route('inicio') }}"
+                        class="nav_link {{ $currentRoute == '/' || $currentRoute != 'usuarios' ? 'active' : '' }}">
+                        <i class='bx bx-home nav_icon'></i>
+                        <span class="nav_name">Inicio</span>
+                    </a>
+                    <a href="{{ route('usuarios') }}"
+                        class="nav_link {{ $currentRoute == 'dias_festivos' ? 'active' : '' }}">
+                        <i class='bx bx-calendar nav_icon'></i>
+                        <span class="nav_name">Días Festivos</span>
+                    </a>
+                    <a href="{{ route('usuarios') }}"
+                        class="nav_link {{ $currentRoute == 'usuarios' ? 'active' : '' }}">
+                        <i class='bx bx-group nav_icon'></i>
+                        <span class="nav_name">Usuarios</span>
+                    </a>
                 </div>
             </div>
         </nav>
     </div>
-
     <div class="container">
         {{ $slot }}
     </div>
@@ -71,6 +71,13 @@
         </div>
     </footer>
 
+    <!-- Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/popper.js@1.14.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
 </body>
 
 </html>
