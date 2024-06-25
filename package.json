@@ -14,6 +14,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
-        "js-year-calendar": "^2.0.0"
+        "js-year-calendar": "^2.0.0",
+        "sweetalert2": "^11.12.0"
     }
 }

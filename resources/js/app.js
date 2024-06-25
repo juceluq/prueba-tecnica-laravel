@@ -3,6 +3,7 @@ import "bootstrap";
 import "@popperjs/core";
 import Calendar from "js-year-calendar";
 import "js-year-calendar/dist/js-year-calendar.css";
+import Swal from "sweetalert2";
 
 document.addEventListener("DOMContentLoaded", function (event) {
     const showNavbar = (toggleId, navId, bodyId, headerId) => {
@@ -34,20 +35,80 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
     linkColor.forEach((l) => l.addEventListener("click", colorLink));
 
+    $(document).ready(function () {
+        $(".delete-btn").click(function (e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: "¡No podrás revertir esto!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Sí, eliminarlo!",
+                cancelButtonText: "Cancelar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // $.ajax({
+                    //     type: 'DELETE',
+                    //     url: '/ruta-para-eliminar-usuario/' + id,
+                    //     success: function(response) {
+                    //         // Manejar la respuesta si es necesario
+                    //         Swal.fire(
+                    //             'Eliminado!',
+                    //             'El usuario ha sido eliminado.',
+                    //             'success'
+                    //         ).then(() => {
+                    //             location.reload();
+                    //         });
+                    //     },
+                    //     error: function(error) {
+                    //         console.log(error);
+                    //     }
+                    // });
+
+                    // Ejemplo de SweetAlert2 después de eliminar (simulado)
+                    Swal.fire(
+                        "Eliminado!",
+                        "El usuario ha sido eliminado.",
+                        "success"
+                    ).then(() => {
+                        // Opcional: recargar la página o actualizar la tabla después de eliminar
+                        location.reload();
+                    });
+                }
+            });
+        });
+    });
+
+    /* TODO Calendario */
+
     let calendar = null;
 
     function editEvent(event) {
         $('#event-modal input[name="event-index"]').val(event ? event.id : "");
         $('#event-modal input[name="event-name"]').val(event ? event.name : "");
-        $('#event-modal input[name="event-location"]').val(event ? event.location : "");
-        $('#event-modal input[name="event-start-date"]').datepicker("update", event ? event.startDate : "");
-        $('#event-modal input[name="event-end-date"]').datepicker("update", event ? event.endDate : "");
-        $("#event-modal").modal("show"); // Asegúrate de usar "show" aquí
+        $('#event-modal input[name="event-location"]').val(
+            event ? event.location : ""
+        );
+        $('#event-modal input[name="event-start-date"]').datepicker(
+            "update",
+            event ? event.startDate : ""
+        );
+        $('#event-modal input[name="event-end-date"]').datepicker(
+            "update",
+            event ? event.endDate : ""
+        );
+        $("#event-modal").modal("show");
     }
 
     function deleteEvent(event) {
         var dataSource = calendar.getDataSource();
-        calendar.setDataSource(dataSource.filter((item) => item.id !== event.id));
+        calendar.setDataSource(
+            dataSource.filter((item) => item.id !== event.id)
+        );
     }
 
     function saveEvent() {
@@ -55,8 +116,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
             id: $('#event-modal input[name="event-index"]').val(),
             name: $('#event-modal input[name="event-name"]').val(),
             location: $('#event-modal input[name="event-location"]').val(),
-            startDate: $('#event-modal input[name="event-start-date"]').datepicker("getDate"),
-            endDate: $('#event-modal input[name="event-end-date"]').datepicker("getDate"),
+            startDate: $(
+                '#event-modal input[name="event-start-date"]'
+            ).datepicker("getDate"),
+            endDate: $('#event-modal input[name="event-end-date"]').datepicker(
+                "getDate"
+            ),
         };
 
         var dataSource = calendar.getDataSource();

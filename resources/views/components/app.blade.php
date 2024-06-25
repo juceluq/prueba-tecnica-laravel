@@ -22,6 +22,17 @@
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
     </header>
     <hr class="hr">
+
+    @if(session('alert'))
+    <div class="alert alert-{{ session('alert')['type'] }} alert-dismissible fade show" role="alert">
+        {{ session('alert')['message'] }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+
+
+
     <div class="l-navbar hide-elements" id="nav-bar">
         <nav class="nav">
             <div>

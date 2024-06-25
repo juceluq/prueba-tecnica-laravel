@@ -9,3 +9,4 @@ Route::get('/', function () {
 })->name('inicio');
 
 Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios');
+Route::post('/usuarios', [UserController::class, 'store'])->name('usuario.store');
