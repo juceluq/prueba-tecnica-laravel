@@ -18,27 +18,28 @@
                     </div>
                 </div>
             </div>
+            @csrf
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>Código</th>
-                        <th>Login</th>
-                        <th>Nombre</th>
-                        <th>Apellidos</th>
-                        <th>Email</th>
-                        <th>Acciones</th>
+                        <th class="text-center">Código</th>
+                        <th class="text-center">Login</th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Apellidos</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
                         <tr>
-                            <td>{{ $user->id }}</td>
-                            <td>{{ $user->login }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->surname }}</td>
-                            <td>{{ $user->email }}</td>
+                            <td class="text-center">{{ $user->id }}</td>
+                            <td class="text-center">{{ $user->username }}</td>
+                            <td class="text-center">{{ $user->name }}</td>
+                            <td class="text-center">{{ $user->surname }}</td>
+                            <td class="text-center">{{ $user->email }}</td>
                             <td>
-                                <div class="d-flex">
+                                <div class="d-flex justify-content-center">
                                     <a href="#"
                                         class="edit-btn btn btn-primary d-flex align-items-center justify-content-center"
                                         style="width: 36px; height: 36px; margin-right: 0.5rem;"
@@ -46,12 +47,12 @@
                                         data-target="#editEmployeeModal">
                                         <i class='bx bx-edit'></i>
                                     </a>
-                                    <a href="#"
-                                        class="delete-btn btn btn-danger d-flex align-items-center justify-content-center"
-                                        style="width: 36px; height: 36px; padding: 0 6px; margin-left: 5px;"
-                                        data-id="{{ $user->id }}">
+                                    <button type="button" value="{{ $user->id }}" data-toggle="modal"
+                                        data-target="#exampleModalCenter"
+                                        class="delete-btn btn btn-danger d-flex align-items-center justify-content-center user-delete-btn"
+                                        style="width: 36px; height: 36px; padding: 0 6px; margin-left: 5px;">
                                         <i class='bx bx-minus'></i>
-                                    </a>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -72,6 +73,10 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input name="username" type="text" class="form-control" required>
+                        </div>
                         <div class="form-group">
                             <label>Nombre</label>
                             <input name="name" type="text" class="form-control" required>
@@ -135,6 +140,34 @@
                         <button type="submit" class="btn btn-info">Guardar</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para eliminar usuario -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Eliminar usuario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que quieres borrar el usuario?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <form action="/deleteUsuario" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" id="user-id" name="user_id">
+                        <button type="submit" class="btn btn-primary">Borrar</button>
+                    </form>
+
+                </div>
             </div>
         </div>
     </div>

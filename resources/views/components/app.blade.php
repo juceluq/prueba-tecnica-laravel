@@ -15,7 +15,6 @@
         href="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.css">
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css'])
-
     <title>Prueba</title>
 </head>
 

@@ -20,36 +20,38 @@ class UserController extends Controller
     }
 
     public function store(Request $request)
-{
-    // Validar los datos del formulario
-    $validatedData = $request->validate([
-        'name' => 'required|string|max:255',
-        'surname' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users',
-        'password' => 'required|string|min:8',
-    ]);
-
-    $user = new User();
-    $user->name = $validatedData['name'];
-    $user->surname = $validatedData['surname'];
-    $user->email = $validatedData['email'];
-    $user->password = bcrypt($validatedData['password']); 
-
-    if ($user->save()) {
-        return redirect()->route('usuarios')->with('alert', [
-            'type' => 'success',
-            'message' => 'Usuario creado correctamente.'
+    {
+        // Validar los datos del formulario
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
         ]);
-    } else {
-        return redirect()->route('usuarios')->with('alert', [
-            'type' => 'error',
-            'message' => 'Error al crear el usuario. Por favor, inténtalo de nuevo.'
-        ]);
+
+        $user = new User();
+        $user->name = $validatedData['name'];
+        $user->surname = $validatedData['surname'];
+        $user->username = $validatedData['username'];
+        $user->email = $validatedData['email'];
+        $user->password = bcrypt($validatedData['password']);
+
+        if ($user->save()) {
+            return redirect()->route('usuarios')->with('alert', [
+                'type' => 'success',
+                'message' => 'Usuario creado correctamente.'
+            ]);
+        } else {
+            return redirect()->route('usuarios')->with('alert', [
+                'type' => 'error',
+                'message' => 'Error al crear el usuario. Por favor, inténtalo de nuevo.'
+            ]);
+        }
     }
-}
 
 
-    
+
 
 
     public function show(User $user)
@@ -73,9 +75,12 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function destroy(User $user)
+    public function destroy(Request $request)
     {
-        $user->delete();
-        return redirect()->route('users.index');
+        User::where("id", $request->user_id)->get()[0]->delete();
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'Usuario eliminado correctamente.'
+        ]);
     }
 }
