@@ -27,6 +27,29 @@ document.addEventListener("DOMContentLoaded", (event) => {
         $("#user-id").val($(event.currentTarget).val());
     });
     
+    $('.edit-btn').on('click', function() {
+        var userId = $(this).data('id');
+        var row = $(this).closest('tr');
+
+        // Obtener los datos del usuario desde la fila
+        var codigo = row.find('.codigo').text().trim();
+        var login = row.find('.login').text().trim();
+        var nombre = row.find('.nombre').text().trim();
+        var apellidos = row.find('.apellidos').text().trim();
+        var email = row.find('.email').text().trim();
+
+        // Llenar los campos del modal de edición con los datos del usuario
+        $('#edit_id').val(userId);
+        $('#edit_codigo').val(codigo);
+        $('#edit_login').val(login);
+        $('#edit_nombre').val(nombre);
+        $('#edit_apellidos').val(apellidos);
+        $('#edit_email').val(email);
+
+        // Mostrar el modal de edición
+        $('#editEmployeeModal').modal('show');
+    });
+    
 
     showNavbar("header-toggle", "nav-bar", "body-pd", "header");
 

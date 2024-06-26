@@ -33,11 +33,11 @@
                 <tbody>
                     @foreach ($users as $user)
                         <tr>
-                            <td class="text-center">{{ $user->id }}</td>
-                            <td class="text-center">{{ $user->username }}</td>
-                            <td class="text-center">{{ $user->name }}</td>
-                            <td class="text-center">{{ $user->surname }}</td>
-                            <td class="text-center">{{ $user->email }}</td>
+                            <td class="text-center codigo">{{ $user->id }}</td>
+                            <td class="text-center login">{{ $user->username }}</td>
+                            <td class="text-center nombre">{{ $user->name }}</td>
+                            <td class="text-center apellidos">{{ $user->surname }}</td>
+                            <td class="text-center email">{{ $user->email }}</td>
                             <td>
                                 <div class="d-flex justify-content-center">
                                     <a href="#"
@@ -47,6 +47,7 @@
                                         data-target="#editEmployeeModal">
                                         <i class='bx bx-edit'></i>
                                     </a>
+
                                     <button type="button" value="{{ $user->id }}" data-toggle="modal"
                                         data-target="#exampleModalCenter"
                                         class="delete-btn btn btn-danger d-flex align-items-center justify-content-center user-delete-btn"
@@ -109,40 +110,49 @@
     <div id="editEmployeeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="editForm">
+                <form action="{{ route('usuarios.actualizar', ['id' => $user->id]) }}" method="POST">
+                    @csrf
+                    @method('PUT')
                     <div class="modal-header">
                         <h4 class="modal-title">Editar Usuario</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" id="edit_id">
+                        <input type="hidden" id="edit_id" name="id" value="{{ $user->id }}">
+                        <div class="form-group">
+                            <label>Código</label>
+                            <input name="id" id="edit_codigo" type="text" class="form-control" value="{{ $user->id }}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Login</label>
+                            <input name="username"  id="edit_login" type="text" class="form-control" value="{{ $user->username }} "required>
+                        </div>
                         <div class="form-group">
                             <label>Nombre</label>
-                            <input id="edit_name" type="text" class="form-control" required>
+                            <input name="name" id="edit_nombre" type="text" class="form-control" value="{{ $user->name }}" required>
                         </div>
                         <div class="form-group">
                             <label>Apellidos</label>
-                            <input id="edit_surname" type="text" class="form-control" required>
+                            <input name="surname" id="edit_apellidos" type="text" class="form-control" value="{{ $user->surname }}" required>
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <input id="edit_email" type="email" class="form-control" required>
+                            <input name="email" id="edit_email" type="email" class="form-control" value="{{ $user->email }}" required>
                         </div>
                         <div class="form-group">
-                            <label>Nueva Contraseña</label>
-                            <input id="edit_password" type="password" class="form-control">
-                            <small class="text-muted">Deja este campo en blanco si no deseas cambiar la
-                                contraseña.</small>
+                            <label>Contraseña</label>
+                            <input name="password" id="edit_password" type="password" class="form-control" required>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-info">Guardar</button>
                     </div>
-                </form>
+                </form>                
             </div>
         </div>
     </div>
+
 
     <!-- Modal para eliminar usuario -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
@@ -150,7 +160,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Eliminar usuario</h5>
+                    <h4 class="modal-title" id="exampleModalCenterTitle">Eliminar usuario</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
