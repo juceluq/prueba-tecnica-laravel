@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Kyslik\ColumnSortable\Sortable;
+
 
 class User extends Authenticatable
 {
@@ -31,7 +33,10 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    
+	use Sortable;
 
+    public $sortable = ['id', 'username', 'name', 'surname', 'email'];
     /**
      * Get the attributes that should be cast.
      *

@@ -26,30 +26,33 @@ document.addEventListener("DOMContentLoaded", (event) => {
         console.log($(event.currentTarget).val());
         $("#user-id").val($(event.currentTarget).val());
     });
-    
-    $('.edit-btn').on('click', function() {
-        var userId = $(this).data('id');
-        var row = $(this).closest('tr');
 
-        // Obtener los datos del usuario desde la fila
-        var codigo = row.find('.codigo').text().trim();
-        var login = row.find('.login').text().trim();
-        var nombre = row.find('.nombre').text().trim();
-        var apellidos = row.find('.apellidos').text().trim();
-        var email = row.find('.email').text().trim();
+    $(document).ready(function () {
+        $("#limpiar").click(function () {
+            window.location.href = "/usuarios";
+        });
 
-        // Llenar los campos del modal de edición con los datos del usuario
-        $('#edit_id').val(userId);
-        $('#edit_codigo').val(codigo);
-        $('#edit_login').val(login);
-        $('#edit_nombre').val(nombre);
-        $('#edit_apellidos').val(apellidos);
-        $('#edit_email').val(email);
+        $("body").on("click", ".edit-btn", function () {
+            var userId = $(this).data("id");
+            var row = $(this).closest("tr");
 
-        // Mostrar el modal de edición
-        $('#editEmployeeModal').modal('show');
+            var codigo = row.find(".codigo").text().trim();
+            var login = row.find(".login").text().trim();
+            var nombre = row.find(".nombre").text().trim();
+            var apellidos = row.find(".apellidos").text().trim();
+            var email = row.find(".email").text().trim();
+
+            document.querySelector("#edit_id").value = userId;
+            document.querySelector("#edit_codigo").value = codigo;
+            document.querySelector("#edit_login").value = login;
+            document.querySelector("#edit_nombre").value = nombre;
+            document.querySelector("#edit_apellidos").value = apellidos;
+            document.querySelector("#edit_email").value = email;
+            document.querySelector("#edit_id").action = `/usuario/${userId}`;
+
+            $("#editEmployeeModal").modal("show");
+        });
     });
-    
 
     showNavbar("header-toggle", "nav-bar", "body-pd", "header");
 
