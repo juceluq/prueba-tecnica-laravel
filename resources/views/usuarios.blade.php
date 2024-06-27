@@ -10,7 +10,7 @@
                         </h2>
                     </div>
                     <div class="col-sm-6 d-flex justify-content-end">
-                        <a href="#addEmployeeModal"
+                        <a href="#modalAddUser"
                             class="btn btn-outline-success d-flex align-items-center justify-content-center"
                             style="width: 36px; height: 36px; padding: 0; margin-right: 1rem;" data-toggle="modal">
                             <i class='bx bx-plus-medical' style="font-size: 1.5rem;"></i>
@@ -21,8 +21,7 @@
 
 
             <!-- Formulario de búsqueda -->
-            <form id="search-form" name="search-form" action="{{ route('usuarios.search') }}" method="POST"
-                class="mb-3">
+            <form id="search-form" name="search-form" action="{{ route('usuarios.search') }}" method="GET" class="mb-3">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">
@@ -37,6 +36,7 @@
                     </div>
                 </div>
             </form>
+            
 
 
             <form id="sort-form" action="{{ route('usuarios') }}" method="GET">
@@ -135,12 +135,12 @@
                                         class="edit-btn btn btn-primary d-flex align-items-center justify-content-center"
                                         style="width: 36px; height: 36px; margin-right: 0.5rem;"
                                         data-id="{{ $user->id }}" data-toggle="modal"
-                                        data-target="#editEmployeeModal">
+                                        data-target="#modalEditUser">
                                         <i class='bx bx-edit'></i>
                                     </button>
 
                                     <button type="button" value="{{ $user->id }}" data-toggle="modal"
-                                        data-target="#exampleModalCenter"
+                                        data-target="#modalDeleteUser"
                                         class="delete-btn btn btn-danger d-flex align-items-center justify-content-center user-delete-btn"
                                         style="width: 36px; height: 36px; padding: 0 6px; margin-left: 5px;">
                                         <i class='bx bx-minus'></i>
@@ -159,15 +159,16 @@
         </div>
     </div>
     <!-- Modal para añadir usuario -->
-    <div id="addEmployeeModal" class="modal fade">
+    <div id="modalAddUser" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form action="{{ route('usuario.store') }}" method="POST">
                     @csrf
                     <div class="modal-header">
                         <h4 class="modal-title">Añadir Usuario</h4>
-                        <button type="button" class="close" data-dismiss="modal"
-                            aria-hidden="true">&times;</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
@@ -204,7 +205,7 @@
 
     <!-- Modal para editar usuario -->
     @if ($users->isNotEmpty())
-        <div id="editEmployeeModal" class="modal fade">
+        <div id="modalEditUser" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form action="{{ route('usuario.update', $user->id) }}" method="POST">
@@ -212,8 +213,9 @@
                         @method('PUT')
                         <div class="modal-header">
                             <h4 class="modal-title">Editar Usuario</h4>
-                            <button type="button" class="close" data-dismiss="modal"
-                                aria-hidden="true">&times;</button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                         <div class="modal-body">
                             <input type="hidden" id="edit_id" name="id" value="{{ $user->id }}">
@@ -261,12 +263,12 @@
 
 
     <!-- Modal para eliminar usuario -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="modalDeleteUser" tabindex="-1" role="dialog"
+        aria-labelledby="modalDeleteUserTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalCenterTitle">Eliminar usuario</h4>
+                    <h4 class="modal-title" id="modalDeleteUserTitle">Eliminar usuario</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

@@ -52,10 +52,9 @@
                 <div class="nav_list">
                     @php
                         $currentRoute = request()->path();
+                        $containsUsuarios = Str::contains($currentRoute, 'usuarios');
                     @endphp
-
-                    <a href="{{ route('inicio') }}"
-                        class="nav_link {{ $currentRoute == '/' || $currentRoute != 'usuarios' ? 'active' : '' }}">
+                    <a href="{{ route('inicio') }}" class="nav_link {{ $currentRoute == '/' ? 'active' : '' }}">
                         <i class='bx bx-home nav_icon'></i>
                         <span class="nav_name">Inicio</span>
                     </a>
@@ -64,13 +63,11 @@
                         <i class='bx bx-calendar nav_icon'></i>
                         <span class="nav_name">Días Festivos</span>
                     </a>
-                    <a href="{{ route('usuarios') }}"
-                        class="nav_link {{ $currentRoute == 'usuarios' ? 'active' : '' }}">
+                    <a href="{{ route('usuarios') }}" class="nav_link {{ $containsUsuarios ? 'active' : '' }}">
                         <i class='bx bx-group nav_icon'></i>
                         <span class="nav_name">Usuarios</span>
                     </a>
                 </div>
-            </div>
         </nav>
     </div>
     <div class="container">

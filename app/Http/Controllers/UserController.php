@@ -33,7 +33,9 @@ class UserController extends Controller
     public function search(Request $request)
     {
         $search = $request->input('search');
-
+        $sort = $request->input('sort', 'id'); 
+        $direction = $request->input('direction', 'asc'); 
+    
         $users = User::query()
             ->when($search, function ($query, $search) {
                 return $query->where(function ($q) use ($search) {
@@ -43,11 +45,11 @@ class UserController extends Controller
                         ->orWhere('email', 'like', "%$search%");
                 });
             })
+            ->orderBy($sort, $direction)
             ->paginate(10);
-
-        return view('usuarios', compact('users'));
+    
+        return view('usuarios', compact('users', 'sort', 'direction', 'search'));
     }
-
 
     public function store(Request $request)
     {
