@@ -48,12 +48,77 @@
             <table id="tabla-usuarios" class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th class="text-center">@sortablelink('id', 'Código')</th>
-                        <th class="text-center">@sortablelink('username', 'Login')</th>
-                        <th class="text-center">@sortablelink('name', 'Nombre')</th>
-                        <th class="text-center">@sortablelink('surname', 'Apellidos')</th>
-                        <th class="text-center">@sortablelink('email', 'Email')</th>
-                        <th class="text-center">Acciones</th>                        
+                        <th class="text-center sortable">
+                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'id', 'direction' => $sort == 'id' && $direction == 'asc' ? 'desc' : 'asc']) }}">
+                                Código
+                                @if ($sort == 'id')
+                                    <span class="sort-icon">
+                                        @if ($direction == 'asc')
+                                            <i class='bx bx-chevron-up'></i>
+                                        @else
+                                            <i class='bx bx-chevron-down'></i>
+                                        @endif
+                                    </span>
+                                @endif
+                            </a>
+                        </th>
+                        <th class="text-center sortable">
+                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'username', 'direction' => $sort == 'username' && $direction == 'asc' ? 'desc' : 'asc']) }}">
+                                Login
+                                @if ($sort == 'username')
+                                    <span class="sort-icon">
+                                        @if ($direction == 'asc')
+                                            <i class='bx bx-chevron-up'></i>
+                                        @else
+                                            <i class='bx bx-chevron-down'></i>
+                                        @endif
+                                    </span>
+                                @endif
+                            </a>
+                        </th>
+                        <th class="text-center sortable">
+                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'name', 'direction' => $sort == 'name' && $direction == 'asc' ? 'desc' : 'asc']) }}">
+                                Nombre
+                                @if ($sort == 'name')
+                                    <span class="sort-icon">
+                                        @if ($direction == 'asc')
+                                            <i class='bx bx-chevron-up'></i>
+                                        @else
+                                            <i class='bx bx-chevron-down'></i>
+                                        @endif
+                                    </span>
+                                @endif
+                            </a>
+                        </th>
+                        <th class="text-center sortable">
+                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'surname', 'direction' => $sort == 'surname' && $direction == 'asc' ? 'desc' : 'asc']) }}">
+                                Apellidos
+                                @if ($sort == 'surname')
+                                    <span class="sort-icon">
+                                        @if ($direction == 'asc')
+                                            <i class='bx bx-chevron-up'></i>
+                                        @else
+                                            <i class='bx bx-chevron-down'></i>
+                                        @endif
+                                    </span>
+                                @endif
+                            </a>
+                        </th>
+                        <th class="text-center sortable">
+                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'email', 'direction' => $sort == 'email' && $direction == 'asc' ? 'desc' : 'asc']) }}">
+                                Email
+                                @if ($sort == 'email')
+                                    <span class="sort-icon">
+                                        @if ($direction == 'asc')
+                                            <i class='bx bx-chevron-up'></i>
+                                        @else
+                                            <i class='bx bx-chevron-down'></i>
+                                        @endif
+                                    </span>
+                                @endif
+                            </a>
+                        </th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>

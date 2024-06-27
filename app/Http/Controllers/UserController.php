@@ -16,11 +16,18 @@ class UserController extends Controller
 {
     use Sortable;
 
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::sortable()->paginate(10);
-
-        return view('usuarios', compact('users'));
+        $usersQuery = User::query();
+    
+        // Ordenamiento por defecto
+        $sort = $request->input('sort', 'id');
+        $direction = $request->input('direction', 'asc');
+    
+        // Aplicar ordenamiento
+        $users = $usersQuery->orderBy($sort, $direction)->paginate(10);
+    
+        return view('usuarios', compact('users', 'sort', 'direction'));
     }
 
     public function search(Request $request)
