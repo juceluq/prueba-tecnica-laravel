@@ -58,8 +58,8 @@
                         <i class='bx bx-home nav_icon'></i>
                         <span class="nav_name">Inicio</span>
                     </a>
-                    <a href="{{ route('usuarios') }}"
-                        class="nav_link {{ $currentRoute == 'dias_festivos' ? 'active' : '' }}">
+                    <a href="{{ route('diasfestivos') }}"
+                        class="nav_link {{ $currentRoute == 'diasfestivos' ? 'active' : '' }}">
                         <i class='bx bx-calendar nav_icon'></i>
                         <span class="nav_name">Días Festivos</span>
                     </a>
