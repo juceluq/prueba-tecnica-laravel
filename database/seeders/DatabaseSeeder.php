@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DiaFestivo;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -14,5 +15,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory()->count(50)->create();
+
+        DiaFestivo::factory()->count(25)->create();
+
     }
 }

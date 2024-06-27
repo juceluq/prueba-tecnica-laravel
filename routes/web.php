@@ -12,6 +12,9 @@ Route::get('/', function () {
 Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios');
 Route::post('/usuarios', [UserController::class, 'store'])->name('usuario.store');
 Route::delete('/deleteUsuario', [UserController::class,'destroy'])->name('usuario.destroy');
-Route::put('/usuario/{id}', [UserController::class,'update'])->name('usuario.update');
+Route::put('/usuario', [UserController::class,'update'])->name('usuario.update');
 Route::get('/usuarios/search', [UserController::class, 'search'])->name('usuarios.search');
 Route::get('/diasfestivos', [DiaFestivoController::class, 'index'])->name('diasfestivos');
+Route::get('/diasfestivos/search', [DiaFestivoController::class, 'search'])->name('dias.search');
+Route::post('/diasfestivos', [DiaFestivoController::class, 'store'])->name('diasfestivos.store');
+Route::put('/diasfestivos/{id}', [DiaFestivoController::class,'update'])->name('diasfestivos.update');

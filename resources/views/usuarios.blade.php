@@ -21,7 +21,8 @@
 
 
             <!-- Formulario de búsqueda -->
-            <form id="search-form" name="search-form" action="{{ route('usuarios.search') }}" method="GET" class="mb-3">
+            <form id="search-form" name="search-form" action="{{ route('usuarios.search') }}" method="GET"
+                class="mb-3">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">
@@ -31,12 +32,12 @@
                     </div>
                     <div class="col-md-6">
                         <button type="submit" class="btn btn-primary">Buscar</button>
-                        <button id="limpiar" type="button" class="btn btn-secondary ml-2"
-                            onclick="resetForm()">Limpiar</button>
+                        <a id="limpiar" type="button" class="btn btn-secondary ml-2"
+                            href="{{route("usuarios")}}">Limpiar</a>
                     </div>
                 </div>
             </form>
-            
+
 
 
             <form id="sort-form" action="{{ route('usuarios') }}" method="GET">
@@ -49,7 +50,8 @@
                 <thead>
                     <tr>
                         <th class="text-center sortable">
-                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'id', 'direction' => $sort == 'id' && $direction == 'asc' ? 'desc' : 'asc']) }}">
+                            <a
+                                href="{{ request()->fullUrlWithQuery(['sort' => 'id', 'direction' => $sort == 'id' && $direction == 'asc' ? 'desc' : 'asc']) }}">
                                 Código
                                 @if ($sort == 'id')
                                     <span class="sort-icon">
@@ -63,7 +65,8 @@
                             </a>
                         </th>
                         <th class="text-center sortable">
-                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'username', 'direction' => $sort == 'username' && $direction == 'asc' ? 'desc' : 'asc']) }}">
+                            <a
+                                href="{{ request()->fullUrlWithQuery(['sort' => 'username', 'direction' => $sort == 'username' && $direction == 'asc' ? 'desc' : 'asc']) }}">
                                 Login
                                 @if ($sort == 'username')
                                     <span class="sort-icon">
@@ -77,7 +80,8 @@
                             </a>
                         </th>
                         <th class="text-center sortable">
-                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'name', 'direction' => $sort == 'name' && $direction == 'asc' ? 'desc' : 'asc']) }}">
+                            <a
+                                href="{{ request()->fullUrlWithQuery(['sort' => 'name', 'direction' => $sort == 'name' && $direction == 'asc' ? 'desc' : 'asc']) }}">
                                 Nombre
                                 @if ($sort == 'name')
                                     <span class="sort-icon">
@@ -91,7 +95,8 @@
                             </a>
                         </th>
                         <th class="text-center sortable">
-                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'surname', 'direction' => $sort == 'surname' && $direction == 'asc' ? 'desc' : 'asc']) }}">
+                            <a
+                                href="{{ request()->fullUrlWithQuery(['sort' => 'surname', 'direction' => $sort == 'surname' && $direction == 'asc' ? 'desc' : 'asc']) }}">
                                 Apellidos
                                 @if ($sort == 'surname')
                                     <span class="sort-icon">
@@ -105,7 +110,8 @@
                             </a>
                         </th>
                         <th class="text-center sortable">
-                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'email', 'direction' => $sort == 'email' && $direction == 'asc' ? 'desc' : 'asc']) }}">
+                            <a
+                                href="{{ request()->fullUrlWithQuery(['sort' => 'email', 'direction' => $sort == 'email' && $direction == 'asc' ? 'desc' : 'asc']) }}">
                                 Email
                                 @if ($sort == 'email')
                                     <span class="sort-icon">
@@ -134,8 +140,7 @@
                                     <button
                                         class="edit-btn btn btn-primary d-flex align-items-center justify-content-center"
                                         style="width: 36px; height: 36px; margin-right: 0.5rem;"
-                                        data-id="{{ $user->id }}" data-toggle="modal"
-                                        data-target="#modalEditUser">
+                                        data-id="{{ $user->id }}" data-toggle="modal" data-target="#modalEditUser">
                                         <i class='bx bx-edit'></i>
                                     </button>
 
@@ -208,7 +213,7 @@
         <div id="modalEditUser" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="{{ route('usuario.update', $user->id) }}" method="POST">
+                    <form action="{{ route('usuario.update') }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="modal-header">
@@ -221,28 +226,24 @@
                             <input type="hidden" id="edit_id" name="id" value="{{ $user->id }}">
                             <div class="form-group">
                                 <label>Código</label>
-                                <input name="id" id="edit_codigo" type="text" class="form-control"
-                                    value="{{ old($user->id) }}" readonly>
+                                <input name="id" id="edit_codigo" type="text" class="form-control" readonly>
                             </div>
                             <div class="form-group">
                                 <label>Login</label>
-                                <input name="username" id="edit_login" type="text" class="form-control"
-                                    value="{{ old($user->username) }} "required>
+                                <input name="username" id="edit_login" type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Nombre</label>
-                                <input name="name" id="edit_nombre" type="text" class="form-control"
-                                    value="{{ old('name', $user->name) }}" required>
+                                <input name="name" id="edit_nombre" type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Apellidos</label>
                                 <input name="surname" id="edit_apellidos" type="text" class="form-control"
-                                    value="{{ old($user->surname) }}" required>
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                <input name="email" id="edit_email" type="email" class="form-control"
-                                    value="{{ old($user->email) }}" required>
+                                <input name="email" id="edit_email" type="email" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Contraseña</label>
@@ -290,4 +291,5 @@
         </div>
     </div>
 
+    @vite('resources/js/user.js')
 </x-app>

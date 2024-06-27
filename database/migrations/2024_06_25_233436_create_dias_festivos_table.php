@@ -13,13 +13,11 @@ class CreateDiasFestivosTable extends Migration
      */
     public function up()
     {
-        Schema::create('dias_festivos', function (Blueprint $table) {
+        Schema::create('dia_festivos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->string('color');
-            $table->unsignedInteger('dia');
-            $table->unsignedInteger('mes');
-            $table->unsignedInteger('anio');
+            $table->date('fecha');
             $table->boolean('recurrente')->default(false);
             $table->timestamps();
         });

@@ -53,13 +53,14 @@
                     @php
                         $currentRoute = request()->path();
                         $containsUsuarios = Str::contains($currentRoute, 'usuarios');
+                        $containsDiasFestivos = Str::contains($currentRoute, 'diasfestivos');
                     @endphp
                     <a href="{{ route('inicio') }}" class="nav_link {{ $currentRoute == '/' ? 'active' : '' }}">
                         <i class='bx bx-home nav_icon'></i>
                         <span class="nav_name">Inicio</span>
                     </a>
                     <a href="{{ route('diasfestivos') }}"
-                        class="nav_link {{ $currentRoute == 'diasfestivos' ? 'active' : '' }}">
+                    class="nav_link {{ $containsDiasFestivos ? 'active' : '' }}">
                         <i class='bx bx-calendar nav_icon'></i>
                         <span class="nav_name">Días Festivos</span>
                     </a>

@@ -10,11 +10,39 @@ class DiaFestivoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('diasfestivos');
+        $diasQuery = DiaFestivo::query();
+
+        // Ordenamiento por defecto
+        $sort = $request->input('sort', 'id');
+        $direction = $request->input('direction', 'asc');
+
+        // Aplicar ordenamiento
+        $dias = $diasQuery->orderBy($sort, $direction)->paginate(10);
+
+        return view('diasfestivos', compact('dias', 'sort', 'direction'));
     }
 
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $sort = $request->input('sort', 'id'); 
+        $direction = $request->input('direction', 'asc'); 
+    
+        $dias = DiaFestivo::query()
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where('nombre', 'like', "%$search%")
+                        ->orWhere('color', 'like', "%$search%")
+                        ->orWhere('fecha', 'like', "%$search%");
+                });
+            })
+            ->orderBy($sort, $direction)
+            ->paginate(10);
+    
+        return view('diasfestivos', compact('dias', 'sort', 'direction', 'search'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -30,41 +58,37 @@ class DiaFestivoController extends Controller
     {
         $request->validate([
             'nombre' => 'required',
-            'dia' => 'required|integer|min:1|max:31',
-            'mes' => 'required|integer|min:1|max:12',
+            'color' => 'required',
+            'fecha' => 'required|date',
         ]);
-    
+
         $diaFestivo = new DiaFestivo();
         $diaFestivo->nombre = $request->input('nombre');
         $diaFestivo->color = $request->input('color');
-        $diaFestivo->dia = $request->input('dia');
-        $diaFestivo->mes = $request->input('mes');
-        $diaFestivo->anio = $request->input('anio');
+        $diaFestivo->fecha = $request->input('fecha');
         $diaFestivo->recurrente = $request->has('recurrente');
         $diaFestivo->save();
-    
-        return redirect()->route('diasfestivos.index');
+
+        return back();
     }
-    
+
     public function update(Request $request, DiaFestivo $diaFestivo)
     {
         $request->validate([
             'nombre' => 'required',
-            'dia' => 'required|integer|min:1|max:31',
-            'mes' => 'required|integer|min:1|max:12',
+            'color' => 'required',
+            'fecha' => 'required|date',
         ]);
-    
+
         $diaFestivo->nombre = $request->input('nombre');
         $diaFestivo->color = $request->input('color');
-        $diaFestivo->dia = $request->input('dia');
-        $diaFestivo->mes = $request->input('mes');
-        $diaFestivo->anio = $request->input('anio');
+        $diaFestivo->fecha = $request->input('fecha');
         $diaFestivo->recurrente = $request->has('recurrente');
-        $diaFestivo->save();
-    
-        return redirect()->route('diasfestivos.index');
+        $diaFestivo->update();
+
+        return back();
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -88,8 +112,7 @@ class DiaFestivoController extends Controller
     public function destroy(DiaFestivo $diaFestivo)
     {
         $diaFestivo->delete();
-    
-        return redirect()->route('diasfestivos.index');
+
+        return back();
     }
-    
 }

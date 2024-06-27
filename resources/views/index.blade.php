@@ -47,4 +47,5 @@
         </div>
     </div>
     <div id="context-menu"></div>
+    @vite('resources/js/calendar.js')
 </x-app>
