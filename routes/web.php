@@ -18,3 +18,4 @@ Route::get('/diasfestivos', [DiaFestivoController::class, 'index'])->name('diasf
 Route::get('/diasfestivos/search', [DiaFestivoController::class, 'search'])->name('dias.search');
 Route::post('/diasfestivos', [DiaFestivoController::class, 'store'])->name('diasfestivos.store');
 Route::put('/diasfestivos/{id}', [DiaFestivoController::class,'update'])->name('diasfestivos.update');
+Route::delete('/deleteDiaFestivo', [DiaFestivoController::class,'destroy'])->name('diasfestivos.destroy');

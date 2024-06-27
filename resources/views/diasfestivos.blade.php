@@ -30,8 +30,8 @@
                     </div>
                     <div class="col-md-6">
                         <button type="submit" class="btn btn-primary">Buscar</button>
-                        <a id="limpiar" type="button" class="btn btn-secondary ml-2" href="{{route('diasfestivos')}}"
-                            >Limpiar</a>
+                        <a id="limpiar" type="button" class="btn btn-secondary ml-2"
+                            href="{{ route('diasfestivos') }}">Limpiar</a>
                     </div>
                 </div>
             </form>
@@ -130,8 +130,8 @@
                         <tr>
                             <td class="text-center codigo">{{ $dia->id }}</td>
                             <td class="text-center nombre">{{ $dia->nombre }}</td>
-                            <td class="text-center color d-flex justify-content-center"><input type="color" value="{{ $dia->color }}" disabled
-                                    class="form-control form-control-color"></td>
+                            <td class="text-center color d-flex justify-content-center"><input type="color"
+                                    value="{{ $dia->color }}" disabled class="form-control form-control-color"></td>
                             <td class="text-center fecha">{{ $dia->fecha }}</td>
                             <td class="text-center recurrente">
                                 @if ($dia->recurrente)
@@ -224,7 +224,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <input type="hidden" id="edit_id" name="id" value="{{ $dia->id }}">
+                            <input type="hidden" id="dia_id" name="dia_id" value="{{ $dia->id }}">
                             <div class="form-group">
                                 <label>Código</label>
                                 <input name="edit_id" id="edit_id" type="text" class="form-control" readonly>
@@ -247,7 +247,7 @@
                             <div class="form-check">
                                 <input name="edit_recurrente" id="edit_recurrente" type="checkbox"
                                     class="form-check-input">
-                                <label class="form-check-label" for="edit_recurrente" >Recurrente</label>
+                                <label class="form-check-label" for="edit_recurrente">Recurrente</label>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -279,10 +279,10 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <form action="/deleteDiaFestivo" method="POST">
+                    <form action={{route("diasfestivos.destroy")}} method="POST" id="deleteForm">
                         @csrf
                         @method('DELETE')
-                        <input type="hidden" id="dia-id" name="dia_id">
+                        <input type="hidden" id="dia_id" name="dia_id">
                         <button type="submit" class="btn btn-danger">Eliminar</button>
                     </form>
 
@@ -290,5 +290,5 @@
             </div>
         </div>
     </div>
-
+    @vite('resources/js/dias.js')
 </x-app>

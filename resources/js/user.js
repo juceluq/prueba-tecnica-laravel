@@ -9,7 +9,6 @@ $(document).ready(function () {
         var apellidos = row.find(".apellidos").text().trim();
         var email = row.find(".email").text().trim();
 
-        document.querySelector("#edit_id").value = userId;
         document.querySelector("#edit_codigo").value = codigo;
         document.querySelector("#edit_login").value = login;
         document.querySelector("#edit_nombre").value = nombre;
@@ -21,7 +20,7 @@ $(document).ready(function () {
     });
 
     $(".user-delete-btn").on("click", (event) => {
-        $("#user-id").val($(event.currentTarget).val());
+        $("#user_id").val($(event.currentTarget).val());
     });
 
 });

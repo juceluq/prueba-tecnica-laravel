@@ -279,10 +279,10 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <form action="/deleteUsuario" method="POST">
+                    <form action={{route('usuario.destroy')}} method="POST">
                         @csrf
                         @method('DELETE')
-                        <input type="hidden" id="user-id" name="user_id">
+                        <input type="hidden" id="user_id" name="user_id">
                         <button type="submit" class="btn btn-danger">Borrar</button>
                     </form>
 

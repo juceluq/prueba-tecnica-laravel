@@ -69,7 +69,10 @@ class DiaFestivoController extends Controller
         $diaFestivo->recurrente = $request->has('recurrente');
         $diaFestivo->save();
 
-        return back();
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'Día festivo creado con éxito.'
+        ]);;
     }
 
     public function update(Request $request, DiaFestivo $diaFestivo)
@@ -109,10 +112,13 @@ class DiaFestivoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DiaFestivo $diaFestivo)
+    public function destroy(Request $request)
     {
-        $diaFestivo->delete();
-
-        return back();
+        dd($request->all());
+        DiaFestivo::where("id", $request->dia_id)->get()[0]->delete();
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'Día eliminado correctamente.'
+        ]);
     }
 }
