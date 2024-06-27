@@ -90,8 +90,6 @@
                     @endforelse
                 </tbody>
             </table>
-            {{ $users->appends(request()->except('page'))->links('pagination::bootstrap-4') }}
-
             {{ $users->withQueryString()->links('pagination::bootstrap-5') }}
         </div>
     </div>
