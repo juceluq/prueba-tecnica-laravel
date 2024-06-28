@@ -17,9 +17,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                     click: deleteEvent,
                 },
             ],
-            selectRange: (e) => {
-                editEvent({ startDate: e.startDate, endDate: e.endDate });
-            },
+            clickDay: addEvent,
             mouseOnDay: (e) => {
                 if (e.events.length > 0) {
                     var content = "";
@@ -33,6 +31,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
                             e.events[i].name +
                             "</div>" +
                             "</div>";
+
+                        if (i < e.events.length - 1) {
+                            content += "<hr>";
+                        }
                     }
 
                     $(e.element).popover({
@@ -45,6 +47,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                     $(e.element).popover("show");
                 }
             },
+
             mouseOutDay: (e) => {
                 if (e.events.length > 0) {
                     $(e.element).popover("hide");
@@ -75,6 +78,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                                 color: dia.color,
                                 startDate: new Date(year, dia.mes - 1, dia.dia),
                                 endDate: new Date(year, dia.mes - 1, dia.dia),
+                                recurrente: dia.recurrente,
                             });
                         }
                     } else {
@@ -84,6 +88,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                             color: dia.color,
                             startDate: new Date(dia.anio, dia.mes - 1, dia.dia),
                             endDate: new Date(dia.anio, dia.mes - 1, dia.dia),
+                            recurrente: dia.recurrente,
                         });
                     }
                 });
@@ -95,63 +100,41 @@ document.addEventListener("DOMContentLoaded", (event) => {
             },
         });
 
-        $("#save-event").click(() => {
-            saveEvent();
-        });
+        
     });
 });
+
+const addEvent = (event) => {
+    console.log(event);
+    $('#modalAddDia input[name="dia"]').val(event ? event.date.getDate() : "");
+    $('#modalAddDia input[name="mes"]').val(event ? event.date.getMonth()+1 : "");
+    $('#modalAddDia input[name="anio"]').val(event ? event.date.getFullYear() : "");
+    $("#modalAddDia").modal("show");
+};
 
 const editEvent = (event) => {
     $('#event-modal input[name="edit_id"]').val(event ? event.id : "");
     $('#event-modal input[name="edit_nombre"]').val(event ? event.name : "");
-    $('#event-modal input[name="edit_color"]').val(
-        event ? event.color : ""
+    $('#event-modal input[name="edit_color"]').val(event ? event.color : "");
+    $('#event-modal input[name="edit_dia"]').val(
+        event ? event.startDate.getDate() : ""
     );
+    $('#event-modal input[name="edit_mes"]').val(
+        event ? event.startDate.getMonth() + 1 : ""
+    );
+    $('#event-modal input[name="edit_anio"]').val(
+        event ? event.startDate.getFullYear() : ""
+    );
+    $('#event-modal input[name="edit_recurrente"]').val(
+        event.recurrente === 1 ? 1 : 0
+    );
+
     $("#event-modal").modal("show");
 };
 
 const deleteEvent = (event) => {
-    var dataSource = calendar.getDataSource();
-    calendar.setDataSource(dataSource.filter((item) => item.id !== event.id));
+    $('#modalDeletedia input[name="dia_delete_id"]').val(event.id);
+    $("#modalDeletedia").modal("show");
 };
 
-const saveEvent = () => {
-    var event = {
-        id: $('#event-modal input[name="event-index"]').val(),
-        name: $('#event-modal input[name="event-name"]').val(),
-        location: $('#event-modal input[name="event-location"]').val(),
-        startDate: $('#event-modal input[name="event-start-date"]').datepicker(
-            "getDate"
-        ),
-        endDate: $('#event-modal input[name="event-end-date"]').datepicker(
-            "getDate"
-        ),
-    };
 
-    var dataSource = calendar.getDataSource();
-
-    if (event.id) {
-        for (var i in dataSource) {
-            if (dataSource[i].id == event.id) {
-                dataSource[i].name = event.name;
-                dataSource[i].location = event.location;
-                dataSource[i].startDate = event.startDate;
-                dataSource[i].endDate = event.endDate;
-            }
-        }
-    } else {
-        var newId = 0;
-        for (var i in dataSource) {
-            if (dataSource[i].id > newId) {
-                newId = dataSource[i].id;
-            }
-        }
-
-        newId++;
-        event.id = newId;
-        dataSource.push(event);
-    }
-
-    calendar.setDataSource(dataSource);
-    $("#event-modal").modal("hide");
-};

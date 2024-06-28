@@ -45,7 +45,6 @@ $(document).ready(function () {
         $('#edit_recurrente').prop('checked', recurrente).trigger('change');
     });
 
-    // Capturar el ID del día a eliminar
     $('.dia-delete-btn').on('click', function () {
         var diaId = $(this).val();
         $('#dia_delete_id').val(diaId);

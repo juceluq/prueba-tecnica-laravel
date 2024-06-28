@@ -104,18 +104,16 @@ class DiaFestivoController extends Controller
                 ]);
             }
 
-            // Asignar los datos validados al modelo DiaFestivo
             $diaFestivo->nombre = $validatedData['edit_nombre'];
             $diaFestivo->color = $validatedData['edit_color'];
             $diaFestivo->dia = $validatedData['edit_dia'];
             $diaFestivo->mes = $validatedData['edit_mes'];
             $diaFestivo->anio = $validatedData['edit_anio'];
-            $diaFestivo->recurrente = $request->has('edit_recurrente');
+            $diaFestivo->recurrente = $request->edit_recurrente;
 
-            if ($request->has('edit_recurrente')) {
+            if ($request->edit_recurrente) {
                 $diaFestivo->anio = null;
             }
-
             // Verificar si hubo cambios en el modelo
             if ($diaFestivo->isClean()) {
                 return back()->with('alert', [

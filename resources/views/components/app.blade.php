@@ -21,6 +21,21 @@
 <body id="body-pd">
     <header class="header" id="header">
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+        @auth
+
+            <div class="dropdown show">
+                <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+
+                    {{ auth()->user()->username }}
+                </a>
+
+                <ul class="dropdown-menu mr-4 mt-2" aria-labelledby="dropdownMenuLink">
+                    <li><a class="dropdown-item" href="{{ route('logout') }}">Cerrar sesión</a></li>
+                </ul>
+            </div>
+        @endauth
+
     </header>
     <hr class="hr">
 

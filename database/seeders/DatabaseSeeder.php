@@ -14,9 +14,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        User::factory()->create([
+            'name' => 'Test User',
+            'surname' => 'Test User',
+            'email' => 'admin@example.com',
+            'username' => 'admin',
+            'password' => 'adminadmin',
+            'email_verified_at' => now(),
+        ]);
+
         User::factory()->count(50)->create();
 
         DiaFestivo::factory()->count(25)->create();
-
     }
 }

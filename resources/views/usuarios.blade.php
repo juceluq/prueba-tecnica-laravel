@@ -285,7 +285,6 @@
                         <input type="hidden" id="user_id" name="user_id">
                         <button type="submit" class="btn btn-danger">Borrar</button>
                     </form>
-
                 </div>
             </div>
         </div>
