@@ -43,7 +43,7 @@ class DiaFestivoController extends Controller
                 return $query->where(function ($q) use ($search) {
                     $q->where('nombre', 'like', "%$search%")
                         ->orWhere('color', 'like', "%$search%")
-                        ->orWhereRaw("CONCAT(dia, '-', mes, '-', anio) LIKE ?", ["%$search%"]);
+                        ->orWhereRaw("CONCAT(dia, '/', mes, '/', anio) LIKE ?", ["%$search%"]);
                 });
             })
             ->orderBy($sort, $direction)
@@ -93,10 +93,8 @@ class DiaFestivoController extends Controller
                 'edit_anio' => 'nullable|integer|min:1900|max:2100',
             ]);
 
-            // Obtener el ID del día festivo a actualizar
             $id = $request->input('edit_id');
 
-            // Buscar el día festivo por su ID
             $diaFestivo = DiaFestivo::find($id);
 
             if (!$diaFestivo) {

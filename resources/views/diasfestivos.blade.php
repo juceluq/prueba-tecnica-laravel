@@ -194,12 +194,12 @@
                         </div>
                         <div class="form-group">
                             <label>Día</label>
-                            <input name="dia" type="number" class="form-control" required min="1"
+                            <input name="dia" type="number" class="form-control dia-input" required min="1"
                                 max="31">
                         </div>
                         <div class="form-group">
                             <label>Mes</label>
-                            <input name="mes" type="number" class="form-control" required min="1"
+                            <input name="mes" type="number" class="form-control mes-input" required min="1"
                                 max="12">
                         </div>
                         <div class="form-group" id="anioGroup">
@@ -226,7 +226,7 @@
         <div id="modalEditdia" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="{{ route('diasfestivos.update', $dia->id) }}" method="POST">
+                    <form action="{{ route('diasfestivos.update') }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="modal-header">
@@ -252,12 +252,12 @@
                             </div>
                             <div class="form-group">
                                 <label>Día</label>
-                                <input name="edit_dia" id="edit_dia" type="number" class="form-control" required
+                                <input name="edit_dia" id="edit_dia" type="number" class="form-control dia-input" required
                                     min="1" max="31">
                             </div>
                             <div class="form-group">
                                 <label>Mes</label>
-                                <input name="edit_mes" id="edit_mes" type="number" class="form-control" required
+                                <input name="edit_mes" id="edit_mes" type="number" class="form-control mes-input" required
                                     min="1" max="12">
                             </div>
                             <div class="form-group" id="edit_anioGroup">

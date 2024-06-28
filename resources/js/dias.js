@@ -1,19 +1,30 @@
 $(document).ready(function () {
-    // Manejo de checkboxes de recurrente y anioGroup en el modal de edición
+
+    function actualizarDias(mesInput, diaInput) {
+        var mes = parseInt(mesInput.val(), 10);
+        var maxDias = new Date($('#anio').val(), mes, 0).getDate();
+        diaInput.attr('max', maxDias);
+    }
+
     $('#recurrente').on('change', function () {
         $('#anioGroup').toggle(!this.checked);
-        $('#anio').prop('required', !this.checked); // Remueve el required si recurrente está marcado
-
+        $('#anio').prop('required', !this.checked);
     });
 
     $('#edit_recurrente').on('change', function () {
         $('#edit_anioGroup').toggle(!this.checked);
-        $('#edit_anio').prop('required', !this.checked); // Remueve el required si recurrente está marcado
+        $('#edit_anio').prop('required', !this.checked);
     });
 
-    // Mostrar modal de edición y llenar campos
+    $('.mes-input').on('change', function () {
+        actualizarDias($(this), $('.dia-input'));
+    });
+
+    $('#modalEditdia').on('change', '.mes-input', function () {
+        actualizarDias($(this), $('#edit_dia'));
+    });
+
     $('body').on('click', '.edit-btn', function () {
-        var diaId = $(this).data('id');
         var row = $(this).closest('tr');
 
         var codigo = row.find('.codigo').text().trim();
@@ -32,11 +43,9 @@ $(document).ready(function () {
         $('#edit_mes').val(mes);
         $('#edit_anio').val(anio);
         $('#edit_recurrente').prop('checked', recurrente).trigger('change');
-
-        $('#modalEditdia').modal('show');
     });
 
-    // Asignar valor al input hidden para eliminación
+    // Capturar el ID del día a eliminar
     $('.dia-delete-btn').on('click', function () {
         var diaId = $(this).val();
         $('#dia_delete_id').val(diaId);
