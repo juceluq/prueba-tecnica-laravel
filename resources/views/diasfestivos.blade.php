@@ -19,7 +19,6 @@
                 </div>
             </div>
 
-
             <!-- Formulario de búsqueda -->
             <form id="search-form" name="search-form" action="{{ route('dias.search') }}" method="GET" class="mb-3">
                 @csrf
@@ -35,8 +34,6 @@
                     </div>
                 </div>
             </form>
-
-
 
             <form id="sort-form" action="{{ route('diasfestivos') }}" method="GET">
                 @csrf
@@ -94,9 +91,9 @@
                         </th>
                         <th class="text-center sortable">
                             <a
-                                href="{{ request()->fullUrlWithQuery(['sort' => 'fecha', 'direction' => $sort == 'fecha' && $direction == 'asc' ? 'desc' : 'asc']) }}">
+                                href="{{ request()->fullUrlWithQuery(['sort' => 'anio', 'direction' => $sort == 'anio' && $direction == 'asc' ? 'desc' : 'asc']) }}">
                                 Fecha
-                                @if ($sort == 'fecha')
+                                @if ($sort == 'anio')
                                     <span class="sort-icon">
                                         @if ($direction == 'asc')
                                             <i class='bx bx-chevron-up'></i>
@@ -132,7 +129,13 @@
                             <td class="text-center nombre">{{ $dia->nombre }}</td>
                             <td class="text-center color d-flex justify-content-center"><input type="color"
                                     value="{{ $dia->color }}" disabled class="form-control form-control-color"></td>
-                            <td class="text-center fecha">{{ $dia->fecha }}</td>
+                            <td class="text-center fecha">
+                                @if (!$dia->recurrente)
+                                    {{ $dia->dia }}/{{ $dia->mes }}/{{ $dia->anio }}
+                                @else
+                                    {{ $dia->dia }}/{{ $dia->mes }}
+                                @endif
+                            </td>
                             <td class="text-center recurrente">
                                 @if ($dia->recurrente)
                                     <i class='bx bx-check' style="font-size: 1.75rem;"></i>
@@ -190,8 +193,19 @@
                             <input name="color" type="color" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label>Fecha</label>
-                            <input name="fecha" type="date" class="form-control" required>
+                            <label>Día</label>
+                            <input name="dia" type="number" class="form-control" required min="1"
+                                max="31">
+                        </div>
+                        <div class="form-group">
+                            <label>Mes</label>
+                            <input name="mes" type="number" class="form-control" required min="1"
+                                max="12">
+                        </div>
+                        <div class="form-group" id="anioGroup">
+                            <label>Año</label>
+                            <input name="anio" type="number" class="form-control" required min="1900"
+                                max="2100">
                         </div>
                         <div class="form-check">
                             <input name="recurrente" id="recurrente" type="checkbox" class="form-check-input">
@@ -206,8 +220,6 @@
             </div>
         </div>
     </div>
-
-
 
     <!-- Modal para editar día festivo -->
     @if ($dias->isNotEmpty())
@@ -240,9 +252,19 @@
                                     required>
                             </div>
                             <div class="form-group">
-                                <label>fecha</label>
-                                <input name="edit_fecha" id="edit_fecha" type="date" class="form-control"
-                                    required>
+                                <label>Día</label>
+                                <input name="edit_dia" id="edit_dia" type="number" class="form-control" required
+                                    min="1" max="31">
+                            </div>
+                            <div class="form-group">
+                                <label>Mes</label>
+                                <input name="edit_mes" id="edit_mes" type="number" class="form-control" required
+                                    min="1" max="12">
+                            </div>
+                            <div class="form-group" id="edit_anioGroup">
+                                <label>Año</label>
+                                <input name="edit_anio" id="edit_anio" type="number" class="form-control" required
+                                    min="1900" max="2100">
                             </div>
                             <div class="form-check">
                                 <input name="edit_recurrente" id="edit_recurrente" type="checkbox"
@@ -259,8 +281,6 @@
             </div>
         </div>
     @endif
-
-
 
     <!-- Modal para eliminar día festivo -->
     <div class="modal fade" id="modalDeletedia" tabindex="-1" role="dialog" aria-labelledby="modalDeletediaTitle"
@@ -279,10 +299,10 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <form action={{route("diasfestivos.destroy")}} method="POST" id="deleteForm">
+                    <form action="{{ route('diasfestivos.destroy') }}" method="POST" id="deleteForm">
                         @csrf
                         @method('DELETE')
-                        <input type="hidden" id="dia_id" name="dia_id">
+                        <input type="hidden" id="dia_delete_id" name="dia_delete_id">
                         <button type="submit" class="btn btn-danger">Eliminar</button>
                     </form>
 

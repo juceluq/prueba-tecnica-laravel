@@ -25,11 +25,21 @@
     <hr class="hr">
 
     @if (session('alert'))
-    <div class="alert alert-{{ session('alert')['type'] }} alert-dismissible fade show fixed-top end-0 m-3" role="alert" style="opacity: 0.9;">
-        {{ session('alert')['message'] }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
+        <div class="alert alert-{{ session('alert')['type'] }} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3"
+            role="alert" style="opacity: 0.9; z-index: 1050;">
+            {{ session('alert')['message'] }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                $('.alert').fadeOut('slow');
+            }, 3000);
+        </script>
+    @endif
+
+
+
+
 
 
 
@@ -58,8 +68,7 @@
                         <i class='bx bx-home nav_icon'></i>
                         <span class="nav_name">Inicio</span>
                     </a>
-                    <a href="{{ route('diasfestivos') }}"
-                    class="nav_link {{ $containsDiasFestivos ? 'active' : '' }}">
+                    <a href="{{ route('diasfestivos') }}" class="nav_link {{ $containsDiasFestivos ? 'active' : '' }}">
                         <i class='bx bx-calendar nav_icon'></i>
                         <span class="nav_name">Días Festivos</span>
                     </a>

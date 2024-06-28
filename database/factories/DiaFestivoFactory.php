@@ -19,7 +19,9 @@ class DiaFestivoFactory extends Factory
         return [
             'nombre' => fake()->name(),
             'color' => fake()->hexColor(),
-            'fecha' => fake()->date(),
+            'dia' => fake()->dayOfMonth(),
+            'mes' => fake()->month(),
+            'anio' => fake()->year(),
             'recurrente' => fake()->boolean(),
         ];
     }

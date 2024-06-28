@@ -31,26 +31,18 @@ class DiaFestivoController extends Controller
         $direction = $request->input('direction', 'asc'); 
     
         $dias = DiaFestivo::query()
-            ->when($search, function ($query, $search) {
-                return $query->where(function ($q) use ($search) {
-                    $q->where('nombre', 'like', "%$search%")
-                        ->orWhere('color', 'like', "%$search%")
-                        ->orWhere('fecha', 'like', "%$search%");
-                });
-            })
-            ->orderBy($sort, $direction)
-            ->paginate(10);
-    
-        return view('diasfestivos', compact('dias', 'sort', 'direction', 'search'));
-    }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        ->when($search, function ($query, $search) {
+            return $query->where(function ($q) use ($search) {
+                $q->where('nombre', 'like', "%$search%")
+                    ->orWhere('color', 'like', "%$search%")
+                    ->orWhereRaw("CONCAT(dia, '-', mes, '-', anio) LIKE ?", ["%$search%"]);
+            });
+        })
+        ->orderBy($sort, $direction)
+        ->paginate(10);
 
+    return view('diasfestivos', compact('dias', 'sort', 'direction', 'search'));
+}
     /**
      * Store a newly created resource in storage.
      */
@@ -59,20 +51,27 @@ class DiaFestivoController extends Controller
         $request->validate([
             'nombre' => 'required',
             'color' => 'required',
-            'fecha' => 'required|date',
+            'dia' => 'required|integer|min:1|max:31',
+            'mes' => 'required|integer|min:1|max:12',
+            'anio' => 'nullable|integer|min:1900|max:2100',
         ]);
 
         $diaFestivo = new DiaFestivo();
         $diaFestivo->nombre = $request->input('nombre');
         $diaFestivo->color = $request->input('color');
-        $diaFestivo->fecha = $request->input('fecha');
+        $diaFestivo->dia = $request->input('dia');
+        $diaFestivo->mes = $request->input('mes');
+        $diaFestivo->anio = $request->input('anio');
         $diaFestivo->recurrente = $request->has('recurrente');
+        if($diaFestivo->recurrente){
+            $diaFestivo->anio = null;
+        }
         $diaFestivo->save();
 
         return back()->with('alert', [
             'type' => 'success',
             'message' => 'Día festivo creado con éxito.'
-        ]);;
+        ]);
     }
 
     public function update(Request $request, DiaFestivo $diaFestivo)
@@ -80,42 +79,30 @@ class DiaFestivoController extends Controller
         $request->validate([
             'nombre' => 'required',
             'color' => 'required',
-            'fecha' => 'required|date',
+            'dia' => 'required|integer|min:1|max:31',
+            'mes' => 'required|integer|min:1|max:12',
+            'anio' => 'nullable|integer|min:1900|max:2100',
         ]);
 
         $diaFestivo->nombre = $request->input('nombre');
         $diaFestivo->color = $request->input('color');
-        $diaFestivo->fecha = $request->input('fecha');
+        $diaFestivo->dia = $request->input('dia');
+        $diaFestivo->mes = $request->input('mes');
+        $diaFestivo->anio = $request->input('anio');
         $diaFestivo->recurrente = $request->has('recurrente');
         $diaFestivo->update();
 
-        return back();
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'Día festivo editado con éxito.'
+        ]);
     }
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Request $request)
     {
-        dd($request->all());
-        DiaFestivo::where("id", $request->dia_id)->get()[0]->delete();
+        DiaFestivo::where("id", $request->dia_delete_id)->first()->delete();
         return back()->with('alert', [
             'type' => 'success',
             'message' => 'Día eliminado correctamente.'

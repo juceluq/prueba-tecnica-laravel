@@ -17,7 +17,9 @@ class CreateDiasFestivosTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('color');
-            $table->date('fecha');
+            $table->integer('dia');
+            $table->integer('mes');
+            $table->integer('anio')->nullable();
             $table->boolean('recurrente')->default(false);
             $table->timestamps();
         });
