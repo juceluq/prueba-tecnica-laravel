@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DiaFestivoController;
 use App\Http\Controllers\UserController;
+use App\Models\DiaFestivo;
 use Illuminate\Support\Facades\Route;
 
 
@@ -19,3 +20,7 @@ Route::get('/diasfestivos/search', [DiaFestivoController::class, 'search'])->nam
 Route::post('/diasfestivos', [DiaFestivoController::class, 'store'])->name('diasfestivos.store');
 Route::put('/diasfestivos', [DiaFestivoController::class,'update'])->name('diasfestivos.update');
 Route::delete('/deleteDiaFestivo', [DiaFestivoController::class,'destroy'])->name('diasfestivos.destroy');
+Route::get('/api/dias-festivos', function () {
+    $diasFestivos = DiaFestivo::select('id', 'nombre', 'color', 'dia', 'mes', 'anio', 'recurrente')->get();
+    return response()->json($diasFestivos);
+});

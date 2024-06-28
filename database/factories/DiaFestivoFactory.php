@@ -22,7 +22,7 @@ class DiaFestivoFactory extends Factory
             'color' => $this->faker->hexColor(),
             'dia' => $this->faker->dayOfMonth(),
             'mes' => $this->faker->month(),
-            'anio' => $recurrente ? null : $this->faker->year(),
+            'anio' => $recurrente ? null : 2024,
             'recurrente' => $recurrente,
         ];
     }
