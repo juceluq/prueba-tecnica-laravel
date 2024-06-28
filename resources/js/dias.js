@@ -2,10 +2,13 @@ $(document).ready(function () {
     // Manejo de checkboxes de recurrente y anioGroup en el modal de edición
     $('#recurrente').on('change', function () {
         $('#anioGroup').toggle(!this.checked);
+        $('#anio').prop('required', !this.checked); // Remueve el required si recurrente está marcado
+
     });
 
     $('#edit_recurrente').on('change', function () {
         $('#edit_anioGroup').toggle(!this.checked);
+        $('#edit_anio').prop('required', !this.checked); // Remueve el required si recurrente está marcado
     });
 
     // Mostrar modal de edición y llenar campos

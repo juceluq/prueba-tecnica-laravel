@@ -16,13 +16,14 @@ class DiaFestivoFactory extends Factory
      */
     public function definition(): array
     {
+        $recurrente = $this->faker->boolean();
         return [
-            'nombre' => fake()->name(),
-            'color' => fake()->hexColor(),
-            'dia' => fake()->dayOfMonth(),
-            'mes' => fake()->month(),
-            'anio' => fake()->year(),
-            'recurrente' => fake()->boolean(),
+            'nombre' => $this->faker->words(3, true),
+            'color' => $this->faker->hexColor(),
+            'dia' => $this->faker->dayOfMonth(),
+            'mes' => $this->faker->month(),
+            'anio' => $recurrente ? null : $this->faker->year(),
+            'recurrente' => $recurrente,
         ];
     }
 }

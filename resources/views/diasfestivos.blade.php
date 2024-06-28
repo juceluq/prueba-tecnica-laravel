@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-sm-6 d-flex align-items-center">
                         <h2 class="d-flex align-items-center">
-                            <i class='bx bxs-dia-detail' style="margin-right: 10px;"></i>
+                            <i class='bx bx-calendar-week' style="margin-right: 10px;"></i>
                             <span style="margin-left: 10px;">Listado de Días festivos</span>
                         </h2>
                     </div>
@@ -204,7 +204,7 @@
                         </div>
                         <div class="form-group" id="anioGroup">
                             <label>Año</label>
-                            <input name="anio" type="number" class="form-control" required min="1900"
+                            <input name="anio" id="anio" type="number" class="form-control" required min="1900"
                                 max="2100">
                         </div>
                         <div class="form-check">
@@ -236,7 +236,6 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <input type="hidden" id="dia_id" name="dia_id" value="{{ $dia->id }}">
                             <div class="form-group">
                                 <label>Código</label>
                                 <input name="edit_id" id="edit_id" type="text" class="form-control" readonly>
